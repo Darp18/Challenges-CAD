@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Challenge Campaign</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <button id="dark-mode-toggle">☾</button>
+    <h1>Challenge Campaign</h1> <!-- Removed typing animation -->
+    <p>Explore, Discover, <span id="changing-subtitle">Grow</span></p> <!-- Added span for changing text -->
+  </header>
+
+  <main>
+    <div class="button-container">
+      <!-- Each button has data-category like "Physical", "Social", etc. -->
+      <div class="category-button" data-category="Physical">
+        <img src="images/Physical.png" alt="Physical Challenge">
+        <span>Physical</span>
+      </div>
+
+      <div class="category-button" data-category="Social">
+        <img src="images/Social.png" alt="Social Challenge">
+        <span>Social</span>
+      </div>
+
+      <div class="category-button" data-category="Emotional">
+        <img src="images/Emotional.png" alt="Emotional Challenge">
+        <span>Emotional</span>
+      </div>
+
+      <div class="category-button" data-category="Spiritual">
+        <img src="images/Spiritual.png" alt="Spiritual Challenge">
+        <span>Spiritual</span>
+      </div>
+
+      <div class="category-button" data-category="Creative">
+        <img src="images/Creative.png" alt="Creative Challenge">
+        <span>Creative</span>
+      </div>
+
+      <div class="category-button" data-category="Travel">
+        <img src="images/Travel.png" alt="Travel Challenge">
+        <span>Travel</span>
+      </div>
+    </div>
+  </main>
+
+  <div id="motivation-text-bar">
+    <div id="motivation-text"></div>
+  </div>
+
+  <!-- Your JS file -->
+  <script src="script.js"></script>
+</body>
+</html>

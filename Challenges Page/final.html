@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Final Submission</title>
+  <style>
+    /* Reset default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f9;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #444;
+      overflow: hidden;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px 50px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 25px;
+      color: #2c3e50;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    #message {
+      margin-top: 20px;
+      font-size: 1.1em;
+      font-weight: 400;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .loader {
+      border: 8px solid #e0e0e0;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    .success {
+      color: #27ae60;
+    }
+
+    .error {
+      color: #e74c3c;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 40px;
+      }
+
+      h1 {
+        font-size: 1.5em;
+      }
+
+      #message {
+        font-size: 1em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="loader" id="loader"></div>
+    <h1>Submitting Your Data...</h1>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Disable back navigation
+      window.history.forward();
+      function noBack() {
+        window.history.forward();
+      }
+      window.onload = noBack;
+      window.onpageshow = function(evt) { if (evt.persisted) noBack(); }
+      window.onunload = function() { void (0); };
+
+      // Parse URL parameters
+      const params = new URLSearchParams(window.location.search);
+
+      const firstName = params.get('firstName') || "";
+      const lastName  = params.get('lastName')  || "";
+      const email     = params.get('email')     || "";
+      const social    = params.get('social')    || "";  // Category
+      const imagesStr = params.get('images')    || "";  // comma-separated
+
+      // Create a nicer comma-separated string for images in "notes"
+      const selectedImages = imagesStr ? imagesStr.split(",").join(", ") : "";
+
+      // Build an object with keys matching your Google Sheet columns
+      const data = {
+        "lastName":   lastName,
+        "firstName":  firstName,
+        "Category":   social,
+        "Email":      email,
+        "password":   social,         
+        "Notes":      selectedImages  
+      };
+
+      // Validation: Check if any required field is empty
+      const requiredFields = ['lastName', 'firstName', 'Category', 'Email', 'password'];
+      let hasError = false;
+      let missingFields = [];
+
+      requiredFields.forEach(field => {
+        if (!data[field] || data[field].trim() === "") {
+          hasError = true;
+          missingFields.push(field);
+        }
+      });
+
+      const messageDiv = document.getElementById("message");
+      const loader = document.getElementById("loader");
+      const heading = document.querySelector("h1");
+
+      if (hasError) {
+        // Display error message
+        heading.textContent = "Submission Error";
+        messageDiv.textContent = "Please fill out all required fields: " + missingFields.join(", ");
+        messageDiv.classList.add("error");
+        loader.style.display = "none";
+        return; // Prevent form submission
+      }
+
+      // Convert this object to a URL-encoded string for POST
+      const formData = [];
+      for (const key in data) {
+        formData.push(
+          encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+        );
+      }
+      const formDataString = formData.join("&");
+
+      // Send POST request to your existing Apps Script
+      const scriptURL = "https://script.google.com/macros/s/AKfycbxiWJTqoGcVXvnIyYny_ON4ZjDD4tfmCVQ-9NtGF910Ehk5ZWteEERrJ7cql8WFytI8zw/exec";
+
+      fetch(scriptURL, {
+        method: "POST",
+        body: formDataString,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+        }
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.text();
+      })
+      .then(responseText => {
+        // Show success
+        heading.textContent = "Selection Submitted!";
+        messageDiv.textContent = "Thank you for completing the challenges selection.";
+        messageDiv.classList.add("success");
+        loader.style.display = "none";
+      })
+      .catch(error => {
+        // Show error
+        console.error("Error:", error);
+        heading.textContent = "Submission Error";
+        messageDiv.textContent = "An error occurred while submitting your data.";
+        messageDiv.classList.add("error");
+        loader.style.display = "none";
+      });
+    });
+  </script>
+</body>
+</html>
