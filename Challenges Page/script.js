@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const motivationMap = {
     Physical: "Physical: Challenge your body and feel stronger every day!",
     Social: "Social: Connect with friends and build meaningful relationships.",
-    Emotional: "Emotial: Embrace your emotions and grow from within.",
+    Emotional: "Emotional: Embrace your emotions and grow from within.",
     Spiritual: "Spritual: Find inner peace and nurture your soul.",
     Creative: "Creative: Unleash your imagination and create something beautiful.",
     Travel: "Travel: Explore new horizons and broaden your perspective."
