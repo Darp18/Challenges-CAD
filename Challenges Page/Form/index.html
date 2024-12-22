@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anadi Youth Challenge Form</title>
+<style>
+/* CSS Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+.container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333333;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #555555;
+  font-weight: bold;
+}
+
+.form-group textarea,
+.form-group input[type="text"],
+.form-group input[type="email"] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  resize: vertical;
+  font-size: 14px;
+}
+
+.form-group textarea {
+  height: 100px;
+}
+
+.terms {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.terms input[type="checkbox"] {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+}
+
+.terms label {
+  color: #555555;
+  font-size: 14px;
+}
+
+.terms a {
+  color: #1a73e8;
+  text-decoration: none;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  background-color: #1a73e8;
+  border: none;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #1669c1;
+}
+
+.disclaimer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: #777777;
+  text-align: center;
+}
+
+.message {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333333;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Anadi Youth Challenge Feedback</h2>
+  <form id="challengeForm">
+    <div class="form-group">
+      <label for="thoughts">1. What were your thoughts when you first got the challenge?</label>
+      <textarea id="thoughts" name="thoughts" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="feelAfterCommit">2. How did you feel after committing to it?</label>
+      <textarea id="feelAfterCommit" name="feelAfterCommit" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="experience">3. What was your experience when attempting to complete the challenge?</label>
+      <textarea id="experience" name="experience" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="feelAfterAttempt">4. How did you feel after the attempt?</label>
+      <textarea id="feelAfterAttempt" name="feelAfterAttempt" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="learned">5. What did you learn about yourself?</label>
+      <textarea id="learned" name="learned" required></textarea>
+    </div>
+
+    <div class="terms">
+      <input type="checkbox" id="terms" name="terms" required>
+      <label for="terms">I agree to the <a href="https://yourlink.com/terms" target="_blank">Anadi Youth - Terms & Conditions</a></label>
+    </div>
+
+    <button type="submit" class="submit-btn">Next</button>
+
+    <div class="disclaimer">
+      <a href="https://yourlink.com/disclaimer" target="_blank">Anadi Youth - Disclaimer</a>
+    </div>
+
+    <div class="message">
+      Be safe and stay within the rules and regulations of your country.
+    </div>
+  </form>
+</div>
+
+<script>
+document.getElementById('challengeForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Check if terms are agreed
+  const termsChecked = document.getElementById('terms').checked;
+  if (!termsChecked) {
+    alert('Please agree to the Terms & Conditions before continuing.');
+    return;
+  }
+
+  // Collect form data
+  const formData = {
+    thoughts: document.getElementById('thoughts').value,
+    feelAfterCommit: document.getElementById('feelAfterCommit').value,
+    experience: document.getElementById('experience').value,
+    feelAfterAttempt: document.getElementById('feelAfterAttempt').value,
+    learned: document.getElementById('learned').value
+  };
+
+  // Store formData in localStorage
+  localStorage.setItem('formData', JSON.stringify(formData));
+
+  // Redirect user to the challenge selection page
+  // Adjust the path to your challenge page as needed
+  window.location.href = 'social.html';
+});
+</script>
+
+</body>
+</html>

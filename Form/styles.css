@@ -1,0 +1,282 @@
+/* Reset and Base Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Light Mode (Default) Background Matches Challenge Campaign */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa, #c3cfe2); /* Matching Challenge Campaign */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #333333;
+    transition: background 0.5s, color 0.5s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Dark Mode Styling: Matches Challenge Campaign */
+  body.dark-mode {
+    background: radial-gradient(circle at center, #202A44 0%, #1B2238 80%);
+    color: #ffffff;
+  }
+  
+  /* Dark Mode Toggle Button */
+  #dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255,255,255,0.8);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 40px;
+    text-align: center;
+    transition: background 0.3s, transform 0.3s, color 0.3s;
+    z-index: 1000;
+    color: #333333;
+  }
+  #dark-mode-toggle:hover {
+    background: rgba(255,255,255,1);
+    transform: scale(1.1);
+  }
+  body.dark-mode #dark-mode-toggle {
+    background: rgba(0,0,0,0.6);
+    color: #ffffff;
+  }
+  body.dark-mode #dark-mode-toggle:hover {
+    background: rgba(0,0,0,0.8);
+  }
+  
+  /* Welcome Overlay with Artistic Animation */
+  .welcome-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    /* Subtle animated gradient matching Challenge Campaign */
+    background: linear-gradient(-45deg, #202A44, #1B2238, #283E51, #202A44);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 9999;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+    padding: 20px;
+  }
+  
+  @keyframes gradientShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .welcome-container.fade-out {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  .welcome-container h1 {
+    font-size: 2.5em;
+    color: #ffffff;
+    line-height: 1.2;
+    max-width: 80%;
+    animation: welcomeAppear 1.5s ease forwards;
+    transform: scale(0.8);
+    opacity: 0;
+    text-shadow: 0 0 10px rgba(0,0,0,0.7);
+  }
+  
+  @keyframes welcomeAppear {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Main Content (Form) with Improved Colors */
+  .main-content {
+    position: relative;
+    max-width: 400px;
+    width: 90%;
+    background: #f5f5f5; /* Dark shade for Light Mode */
+    color: #000000;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 1s ease, transform 1s ease;
+    margin: 0 20px;
+  }
+  
+  body.dark-mode .main-content {
+    background: #ffffff; /* White background for Dark Mode */
+    color: #333333;
+  }
+  
+  .main-content.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .main-content h1 {
+    margin-top: 0;
+    font-size: 1.8em;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: inherit; /* Inherits color based on mode */
+  }
+  
+  .intro-text {
+    text-align: center;
+    font-size: 1em;
+    color: inherit;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: 400;
+    margin: 10px 0 5px;
+    font-size: 0.95em;
+  }
+  
+  input[type="text"], input[type="email"] {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f0f0;
+    color: #333333;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  body.dark-mode input[type="text"],
+  body.dark-mode input[type="email"] {
+    background: #e0e0e0;
+    border: 1px solid #555555;
+    color: #333333;
+  }
+  
+  .checkbox-section {
+    margin: 20px 0;
+    font-size: 0.9em;
+    color: inherit;
+  }
+  
+  .checkbox-section input {
+    margin-right: 10px;
+    transform: scale(1.2);
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  
+  .terms-text, .disclaimer-text {
+    font-size: 0.9em;
+    line-height: 1.4;
+  }
+  
+  .terms-text a, .disclaimer-text a {
+    color: #007BFF;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  body.dark-mode .terms-text a,
+  body.dark-mode .disclaimer-text a {
+    color: #007BFF;
+  }
+  
+  .terms-text a:hover, .disclaimer-text a:hover {
+    text-decoration: underline;
+  }
+  
+  .disclaimer-text {
+    margin-top: 5px;
+    font-size: 0.85em;
+    color: #515151;
+  }
+  
+  body.dark-mode .disclaimer-text {
+    color: #494949;
+  }
+  
+  .button-container {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .button-container button {
+    background: #007BFF;
+    color: #ffffff;
+    padding: 14px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: 500;
+  }
+  
+  .button-container button:hover {
+    background: #0056b3;
+  }
+  
+  /* Slide-up animation on submit */
+  .slide-up {
+    transform: translateY(-100vh);
+    transition: transform 1s ease;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .welcome-container h1 {
+      font-size: 2em;
+    }
+  
+    .main-content {
+      padding: 25px;
+    }
+  
+    .button-container button {
+      padding: 12px 25px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .welcome-container h1 {
+      font-size: 1.8em;
+    }
+  
+    .main-content {
+      padding: 20px;
+    }
+  
+    .button-container button {
+      padding: 10px 20px;
+      font-size: 0.95em;
+    }
+  }
+  
