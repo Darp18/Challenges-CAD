@@ -13,12 +13,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Some motivational text for each category
   const motivationMap = {
-    Physical: "Challenge your body and feel stronger every day!",
-    Social: "Connect with friends and build meaningful relationships.",
-    Emotional: "Embrace your emotions and grow from within.",
-    Spiritual: "Find inner peace and nurture your soul.",
-    Creative: "Unleash your imagination and create something beautiful.",
-    Travel: "Explore new horizons and broaden your perspective."
+    Physical: "Physical: Challenge your body and feel stronger every day!",
+    Social: "Social: Connect with friends and build meaningful relationships.",
+    Emotional: "Emotial: Embrace your emotions and grow from within.",
+    Spiritual: "Spritual: Find inner peace and nurture your soul.",
+    Creative: "Creative: Unleash your imagination and create something beautiful.",
+    Travel: "Travel: Explore new horizons and broaden your perspective."
   };
 
   // Hover events: show/hide text
@@ -65,6 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
     "Transform",
     "Flourish"
   ];
+
+  const subtitleColors = {
+    "Grow": "#ff6347",  // Red
+    "Thrive": "#d9a527",  // Yellow
+    "Evolve": "#00bcd4",  // Aqua
+    "Achieve": "#9c27b0",  // Purple
+    "Transform": "#ff9800",  // Orange
+    "Flourish": "#4caf50"  // Green
+  };
+
   let subtitleIndex = 0;
   let subtitleCharIndex = 0;
   let isDeleting = false;
@@ -74,6 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function typeSubtitle() {
     const currentText = subtitleTexts[subtitleIndex];
+    changingSubtitle.style.color = subtitleColors[currentText]; // Set the color dynamically
+
     if (!isDeleting) {
       changingSubtitle.textContent = currentText.substring(0, subtitleCharIndex + 1);
       subtitleCharIndex++;
