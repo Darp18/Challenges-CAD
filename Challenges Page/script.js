@@ -58,6 +58,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // Subtitle Text Animation
   const changingSubtitle = document.getElementById('changing-subtitle');
   const subtitleTexts = [
+    "Energize",
+    "Connect",
+    "Embrace",
+    "Awaken",
+    "Innovate",
+    "Traverse",
     "Grow",
     "Thrive",
     "Evolve",
@@ -72,7 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
     "Evolve": "#00bcd4",  // Aqua
     "Achieve": "#9c27b0",  // Purple
     "Transform": "#ff9800",  // Orange
-    "Flourish": "#4caf50"  // Green
+    "Flourish": "#4caf50",  // Green
+    "Energize": "#ff6347",  // Red
+    "Connect": "#d9a527",  // Yellow
+    "Embrace": "#00bcd4",  // Aqua
+    "Awaken": "#9c27b0",  // Purple
+    "Innovate": "#ff9800",  // Orange
+    "Traverse": "#4caf50"  // Green
   };
 
   let subtitleIndex = 0;
