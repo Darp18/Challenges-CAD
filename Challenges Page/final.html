@@ -186,9 +186,14 @@
       .then(responseText => {
         // Show success
         heading.textContent = "Selection Submitted!";
-        messageDiv.textContent = "Thank you for completing the challenges selection.";
+        messageDiv.textContent = "Thank you for completing the challenges selection. Redirecting to the accountability board...";
         messageDiv.classList.add("success");
         loader.style.display = "none";
+
+        // Redirect after 3 seconds
+        setTimeout(() => {
+          window.location.href = "https://sneh2001patel.github.io/find_yourself/";
+        }, 3000);
       })
       .catch(error => {
         // Show error
