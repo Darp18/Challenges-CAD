@@ -11,6 +11,19 @@ body {
     transition: background 0.5s, color 0.5s;
 }
 
+/* Page fade-in animation */
+body.hidden {
+    opacity: 0;
+    visibility: hidden; /* Prevent interaction before fade-in */
+    transition: opacity 1s ease-in-out, visibility 0s linear 1s;
+  }
+
+  body.visible {
+    opacity: 1;
+    visibility: visible; /* Re-enable visibility */
+    transition: opacity 1s ease-in-out;
+  }
+
 body.dark-mode {
     background: linear-gradient(135deg, #2b2b2b, #1e1e1e);
     color: #eee;
@@ -40,13 +53,16 @@ header {
     transition: background 0.3s, transform 0.3s;
     z-index: 1000;
 }
+
 #dark-mode-toggle:hover {
     background: rgba(255,255,255,1);
     transform: scale(1.1);
 }
+
 body.dark-mode #dark-mode-toggle {
     background: rgba(0,0,0,0.6);
 }
+
 body.dark-mode #dark-mode-toggle:hover {
     background: rgba(0,0,0,0.8);
 }
@@ -99,6 +115,7 @@ header p span#changing-subtitle {
     margin-top: 30px; /* Increased margin-top to bring buttons further down */
 }
 
+/* Button animations */
 .category-button {
     position: relative;
     width: 150px;
@@ -109,6 +126,27 @@ header p span#changing-subtitle {
     transition: transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     background: #fff;
+    transform: translateY(50px); /* Starts slightly off-screen */
+    opacity: 0; /* Initially hidden */
+    animation: slideIn 0.6s ease-out forwards; /* Adds the slide-in effect */
+}
+
+.category-button:nth-child(1) { animation-delay: 0.3s; } /* Delay for 1st button */
+.category-button:nth-child(2) { animation-delay: 0.4s; } /* Delay for 2nd button */
+.category-button:nth-child(3) { animation-delay: 0.5s; }
+.category-button:nth-child(4) { animation-delay: 0.6s; }
+.category-button:nth-child(5) { animation-delay: 0.7s; }
+.category-button:nth-child(6) { animation-delay: 0.8s; }
+
+@keyframes slideIn {
+    from {
+        opacity: 0; /* Start fully invisible */
+        transform: translateY(50px); /* Start slightly below position */
+    }
+    to {
+        opacity: 1; /* Fully visible */
+        transform: translateY(0); /* End at original position */
+    }
 }
 
 .category-button img {

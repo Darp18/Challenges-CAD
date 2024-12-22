@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const email     = document.getElementById('email').value.trim();
   
       // Slide-up animation
-      mainContent.classList.add('slide-up');
+      document.body.classList.add('fade-out-active');
   
       // After 1 second, redirect to Page 2 with URL params
       setTimeout(() => {

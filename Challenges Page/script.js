@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Remove 'hidden' class to trigger page fade-in
+  document.body.classList.remove('hidden');
+  document.body.classList.add('visible');
+
   // Grab data from URL
   const urlParams = new URLSearchParams(window.location.search);
   const firstName = urlParams.get('firstName');
@@ -36,9 +40,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Click event: pass all data (firstName, lastName, email) + chosen category to Page 3
     button.addEventListener('click', () => {
+      document.body.classList.add('fade-out-active');
       // e.g. "Social" -> "Social/index.html"
       const folderName = category; // Make sure folder matches
-      const nextPage   = `${folderName}/index.html`;
+      const nextPage = `${folderName}/index.html`;
+    
 
       const url = `${nextPage}?firstName=${encodeURIComponent(firstName)}`
                 + `&lastName=${encodeURIComponent(lastName)}`

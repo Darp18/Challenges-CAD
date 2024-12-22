@@ -18,7 +18,16 @@
     transition: background 0.5s, color 0.5s;
     position: relative;
     overflow: hidden;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
   }
+  
+  /* Fade-out effect */
+  body.fade-out-active {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+
   
   /* Dark Mode Styling: Matches Challenge Campaign */
   body.dark-mode {
