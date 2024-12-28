@@ -67,6 +67,7 @@
       border: 1px solid #ccc;
       font-size: 1rem;
       transition: border-color 0.3s;
+      text-transform: capitalize; /* Optional: Visually capitalize input */
     }
     form input[type="text"]:focus,
     form input[type="email"]:focus {
@@ -210,6 +211,12 @@
       const category = urlParams.get('category') || "";
       const images   = urlParams.get('images')   || "";
 
+      // Function to capitalize the first letter of a string
+      function capitalizeFirstLetter(string) {
+        if (string.length === 0) return "";
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+      }
+
       const form = document.getElementById('signUpForm');
       form.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -221,9 +228,17 @@
           return;
         }
 
-        const firstName = document.getElementById('firstName').value.trim();
-        const lastName  = document.getElementById('lastName').value.trim();
+        let firstName = document.getElementById('firstName').value.trim();
+        let lastName  = document.getElementById('lastName').value.trim();
         const email     = document.getElementById('email').value.trim();
+
+        // Capitalize first letters
+        firstName = capitalizeFirstLetter(firstName);
+        lastName  = capitalizeFirstLetter(lastName);
+
+        // Optionally, update the input fields with capitalized names
+        document.getElementById('firstName').value = firstName;
+        document.getElementById('lastName').value = lastName;
 
         // Build final page URL
         const finalURL = "final.html"
