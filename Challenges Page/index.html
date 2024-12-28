@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Challenge Campaign</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="hidden">
   <header>
     <button id="dark-mode-toggle">☾</button>
-    <h1>Choose Your Path</h1> <!-- Removed typing animation -->
-    <p>Explore, Discover, <span id="changing-subtitle">Grow</span></p> <!-- Added span for changing text -->
+    <h1>Choose Your Path</h1>
+    <p>Explore, Discover, <span id="changing-subtitle">Grow</span></p>
   </header>
 
   <main>
@@ -53,7 +51,124 @@
     <div id="motivation-text"></div>
   </div>
 
-  <!--  JS file -->
-  <script src="script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // FADE-IN effect
+      document.body.classList.remove('hidden');
+      document.body.classList.add('visible');
+
+      // 1) Read existing images from URL if present
+      const urlParams = new URLSearchParams(window.location.search);
+      const existingImages = urlParams.get('images') || ""; 
+      // e.g. "Physical_1.png,Social_2.png"
+
+      // Dark Mode Toggle (optional)
+      const darkModeToggle = document.getElementById('dark-mode-toggle');
+      darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        darkModeToggle.textContent = 
+          document.body.classList.contains('dark-mode') ? '☀' : '☾';
+      });
+
+      // Category Buttons
+      const buttons = document.querySelectorAll('.category-button');
+      const motivationText = document.getElementById('motivation-text');
+      const motivationTextBar = document.getElementById('motivation-text-bar');
+
+      const motivationMap = {
+        Physical:  "Physical: Challenge your body and feel stronger every day!",
+        Social:    "Social: Connect and build meaningful relationships.",
+        Emotional: "Emotional: Embrace your emotions and grow from within.",
+        Spiritual: "Spiritual: Nurture your soul and find inner peace.",
+        Creative:  "Creative: Unleash your imagination and create something new.",
+        Travel:    "Travel: Explore new horizons and broaden your perspective."
+      };
+
+      buttons.forEach(button => {
+        const category = button.getAttribute('data-category');
+
+        button.addEventListener('mouseenter', () => {
+          motivationText.textContent = motivationMap[category] || '';
+          motivationTextBar.style.opacity = '1';
+        });
+
+        button.addEventListener('mouseleave', () => {
+          motivationTextBar.style.opacity = '0';
+        });
+
+        // When user clicks a category
+        button.addEventListener('click', () => {
+          document.body.classList.add('fade-out-active');
+
+          // Build next page URL => e.g. Physical/index.html?images=...
+          const nextPage = `${category}/index.html`;
+          const query    = new URLSearchParams({
+            images: existingImages  // pass existing images forward
+          });
+
+          window.location.href = `${nextPage}?${query.toString()}`;
+        });
+      });
+
+      // Subtitle text animation (optional)
+      const changingSubtitle = document.getElementById('changing-subtitle');
+      const subtitleTexts = [
+        "Energize", "Connect", "Embrace", "Awaken", 
+        "Innovate", "Traverse", "Grow", "Thrive", 
+        "Evolve", "Achieve", "Transform", "Flourish"
+      ];
+      const subtitleColors = {
+        "Grow":       "#ff6347",
+        "Thrive":     "#d9a527",
+        "Evolve":     "#00bcd4",
+        "Achieve":    "#9c27b0",
+        "Transform":  "#ff9800",
+        "Flourish":   "#4caf50",
+        "Energize":   "#ff6347",
+        "Connect":    "#d9a527",
+        "Embrace":    "#00bcd4",
+        "Awaken":     "#9c27b0",
+        "Innovate":   "#ff9800",
+        "Traverse":   "#4caf50"
+      };
+
+      let subtitleIndex = 0;
+      let subtitleCharIndex = 0;
+      let isDeleting = false;
+      const typingDelay  = 150;
+      const erasingDelay = 100;
+      const newTextDelay = 2000;
+
+      function typeSubtitle() {
+        const currentText = subtitleTexts[subtitleIndex];
+        changingSubtitle.style.color = subtitleColors[currentText] || '#ff6347';
+
+        if (!isDeleting) {
+          // typing forward
+          changingSubtitle.textContent = currentText.substring(0, subtitleCharIndex + 1);
+          subtitleCharIndex++;
+          if (subtitleCharIndex === currentText.length) {
+            isDeleting = true;
+            setTimeout(typeSubtitle, newTextDelay);
+          } else {
+            setTimeout(typeSubtitle, typingDelay);
+          }
+        } else {
+          // erasing
+          changingSubtitle.textContent = currentText.substring(0, subtitleCharIndex - 1);
+          subtitleCharIndex--;
+          if (subtitleCharIndex === 0) {
+            isDeleting = false;
+            subtitleIndex = (subtitleIndex + 1) % subtitleTexts.length;
+            setTimeout(typeSubtitle, typingDelay);
+          } else {
+            setTimeout(typeSubtitle, erasingDelay);
+          }
+        }
+      }
+
+      setTimeout(typeSubtitle, 1000);
+    });
+  </script>
 </body>
 </html>

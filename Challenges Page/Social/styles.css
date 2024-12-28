@@ -2,19 +2,18 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif; /* Using Poppins for body text */
+  font-family: 'Poppins', sans-serif;
   overflow-x: hidden;
   color: #444;
   position: relative;
-  background: #fff;
+  background: #fff; /* Social page background */
 }
 
-/* Fonts for Headings */
 h1, h2 {
   font-family: 'Charm', cursive;
 }
 
-/* Background Decorative Shapes */
+/* Background & Shapes */
 .background {
   position: fixed;
   top: 0;
@@ -23,7 +22,7 @@ h1, h2 {
   height: 100%;
   z-index: -1;
   overflow: hidden;
-  background: #fff;
+  background: #fff; /* Same as original Social background */
 }
 
 .shape {
@@ -78,13 +77,6 @@ h1, h2 {
   left: 20%;
   transform: rotate(45deg);
 }
-
-/* Additional Decorative Shapes */
-.hexagon1, .hexagon2, .pentagon1, .pentagon2, .star1, .star2, .circle3, .circle4, .triangle2, .triangle3 {
-  /* Add styles for new decorative shapes as needed */
-  /* Example for hexagons */
-}
-
 .hexagon1, .hexagon2 {
   width: 100px;
   height: 55px;
@@ -109,7 +101,6 @@ h1, h2 {
   z-index: 10;
   opacity: 0.9;
 }
-
 .stickman {
   width: 40px;
   height: 60px;
@@ -117,12 +108,10 @@ h1, h2 {
   background: none;
   animation: jump 2s infinite ease-in-out;
 }
-
 @keyframes jump {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-5px); }
 }
-
 .stickman::before {
   content: '';
   position: absolute;
@@ -144,64 +133,56 @@ h1, h2 {
   background: #444;
   transform: translateX(-50%);
 }
-
-.stickman-arm-left, .stickman-arm-right, .stickman-leg-left, .stickman-leg-right {
+.stickman-arm-left, .stickman-arm-right,
+.stickman-leg-left, .stickman-leg-right {
   position: absolute;
   width: 2px;
   height: 15px;
   background: #444;
   transform-origin: top center;
 }
-
 .stickman-arm-left {
   top: 12px;
   left: 50%;
   transform: rotate(45deg) translateX(-50%);
   animation: armLeft 2s infinite ease-in-out;
 }
-
 .stickman-arm-right {
   top: 12px;
   left: 50%;
   transform: rotate(-45deg) translateX(-50%);
   animation: armRight 2s infinite ease-in-out;
 }
-
 .stickman-leg-left {
   top: 32px;
   left: 50%;
   transform: rotate(-20deg) translateX(-50%);
   animation: legLeft 2s infinite ease-in-out;
 }
-
 .stickman-leg-right {
   top: 32px;
   left: 50%;
   transform: rotate(20deg) translateX(-50%);
   animation: legRight 2s infinite ease-in-out;
 }
-
 @keyframes armLeft {
   0%,100% { transform: rotate(45deg) translateX(-50%); }
   50% { transform: rotate(90deg) translateX(-50%); }
 }
-
 @keyframes armRight {
   0%,100% { transform: rotate(-45deg) translateX(-50%); }
   50% { transform: rotate(-90deg) translateX(-50%); }
 }
-
 @keyframes legLeft {
   0%,100% { transform: rotate(-20deg) translateX(-50%); }
   50% { transform: rotate(-45deg) translateX(-50%); }
 }
-
 @keyframes legRight {
   0%,100% { transform: rotate(20deg) translateX(-50%); }
   50% { transform: rotate(45deg) translateX(-50%); }
 }
 
-/* Container and Cards */
+/* Container & Cards */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -214,7 +195,6 @@ h1, h2 {
   padding: 40px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
-
 h1 {
   margin-bottom: 10px;
   font-size: 2.5rem;
@@ -227,48 +207,36 @@ p {
   color: #555;
   font-weight: 400;
 }
-
-/* Cards Containers */
 .cards-container {
   display: flex;
   gap: 20px;
   justify-content: center;
-  margin-bottom: 40px; /* Space between top and bottom rows */
+  margin-bottom: 40px;
 }
-
-.top-cards, .bottom-cards {
-  /* No additional styles needed unless specific styling is desired */
-}
-
-/* Card Styles with Flip and Hover Effects */
 .card {
   width: 250px;
-  height: 350px; /* Fixed height to ensure consistency */
+  height: 350px;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.6s, box-shadow 0.3s; /* Added box-shadow transition */
+  transition: transform 0.6s, box-shadow 0.3s;
   transform-style: preserve-3d;
   border: 3px solid transparent;
-  background: none; /* Removed background */
-}
-.card.selected {
-  border: 3px solid #9BD0BE; 
-  box-shadow: 0 0 10px rgba(155,208,190,0.5);
+  background: none;
 }
 .card.flipped .card-inner {
   transform: rotateY(180deg);
 }
-
-/* Hover Effect */
-.card:hover {
-  transform: translateY(-10px); /* Slightly moves the card up */
-  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+.card.selected {
+  border: 3px solid #9BD0BE;
+  box-shadow: 0 0 10px rgba(155,208,190,0.5);
 }
-
-/* Inner Container for 3D Effect */
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.2);
+}
 .card-inner {
   position: relative;
   width: 100%;
@@ -277,61 +245,75 @@ p {
   transition: transform 0.6s;
   transform-style: preserve-3d;
 }
-
-/* Front and Back Faces */
 .card-front, .card-back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
   border-radius: 12px;
-}
-
-.card-front {
   background-size: cover;
   background-position: center;
 }
-
 .card-back {
-  background-size: cover;
-  background-position: center;
   transform: rotateY(180deg);
 }
 
-/* Accept Button */
-.accept-button {
+/* Two-Button Row */
+.btn-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+/* Explore More => Yellow */
+.explore-button {
   padding: 15px 30px;
   font-size: 1rem;
   font-weight: 500;
-  background: #FAE159;
+  background: #FAE159; /* Same as your old accept-button color */
   color: #333;
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  margin-top: 40px;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition: background 0.3s, transform 0.3s;
   font-family: 'Poppins', sans-serif;
 }
-.accept-button:hover {
+.explore-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+/* I Commit => Green */
+.commit-button {
+  padding: 15px 30px;
+  font-size: 1rem;
+  font-weight: 500;
+  background: #2AA198; /* Green from Physical "I Commit" */
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  font-family: 'Poppins', sans-serif;
+}
+.commit-button:hover {
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* Responsive Design */
+/* Responsive Breakpoints */
 @media (max-width: 900px) {
   .card {
-      width: 200px;
-      height: 280px;
+    width: 200px;
+    height: 280px;
   }
 }
-
 @media (max-width: 600px) {
   .cards-container {
-      flex-direction: column;
-      align-items: center;
+    flex-direction: column;
+    align-items: center;
   }
   .card {
-      width: 80%;
-      max-width: 250px;
+    width: 80%;
+    max-width: 250px;
   }
 }

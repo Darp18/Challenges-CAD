@@ -1,12 +1,12 @@
-// Big Logos/Challenges Page/Creative/Creative.js
+// Big Logos/Challenges Page/Creative/script.js
 
 // Image Array with Categories
 const images = [
   // Easy
-  { category: 'easy', image: "../images/Creative_1.png" },
-  { category: 'easy', image: "../images/Creative_2.png" },
-  { category: 'easy', image: "../images/Creative_3.png" },
-  { category: 'easy', image: "../images/Creative_4.png" },
+  { category: 'easy',   image: "../images/Creative_1.png" },
+  { category: 'easy',   image: "../images/Creative_2.png" },
+  { category: 'easy',   image: "../images/Creative_3.png" },
+  { category: 'easy',   image: "../images/Creative_4.png" },
 
   // Medium
   { category: 'medium', image: "../images/Creative_5.png" },
@@ -15,10 +15,10 @@ const images = [
   { category: 'medium', image: "../images/Creative_8.png" },
 
   // Hard
-  { category: 'hard', image: "../images/Creative_9.png" },
-  { category: 'hard', image: "../images/Creative_10.png" },
-  { category: 'hard', image: "../images/Creative_11.png" },
-  { category: 'hard', image: "../images/Creative_12.png" }
+  { category: 'hard',   image: "../images/Creative_9.png" },
+  { category: 'hard',   image: "../images/Creative_10.png" },
+  { category: 'hard',   image: "../images/Creative_11.png" },
+  { category: 'hard',   image: "../images/Creative_12.png" }
 ];
 
 // Fisher-Yates shuffle
@@ -30,6 +30,7 @@ function shuffleArray(array) {
   return array;
 }
 
+// Select n random images per sub-category
 function selectRandomFromEachCategory(array, nPerCategory) {
   const categories = [...new Set(array.map(item => item.category))];
   let selected = [];
@@ -37,45 +38,47 @@ function selectRandomFromEachCategory(array, nPerCategory) {
   categories.forEach(category => {
     const filtered = array.filter(item => item.category === category);
     const shuffled = shuffleArray(filtered);
-    const selectedItems = shuffled.slice(0, nPerCategory);
-    selected = selected.concat(selectedItems);
+    selected = selected.concat(shuffled.slice(0, nPerCategory));
   });
 
   return selected;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Retrieve data from URL
+  // 1) Read any existing images from the URL for "accumulate" flow
   const urlParams = new URLSearchParams(window.location.search);
-  const firstName = urlParams.get('firstName');
-  const lastName  = urlParams.get('lastName');
-  const email     = urlParams.get('email');
-  const social    = urlParams.get('social'); // e.g. "Social"
+  const existingImagesStr = urlParams.get('images') || "";
+  const existingImages = existingImagesStr ? existingImagesStr.split(',') : [];
 
-  const topCardsContainer = document.getElementById('top-cards');
+  // Hard-code category to "Creative"
+  const category = "Creative";
+
+  // Identify containers
+  const topCardsContainer    = document.getElementById('top-cards');
   const bottomCardsContainer = document.getElementById('bottom-cards');
 
-  // Define how many images to select per category
-  const imagesPerCategory = 2;
-  const totalCategories = [...new Set(images.map(img => img.category))].length;
-  const totalImagesNeeded = 6; // for 6 cards
-  const perCategory = Math.floor(totalImagesNeeded / totalCategories);
+  // Decide how many images per category to pick
+  const imagesPerCategory  = 2; // 2 easy, 2 medium, 2 hard => total 6
+  const totalImagesNeeded  = 6;
+  
+  // 2) Select random images
+  let selectedImages = selectRandomFromEachCategory(images, imagesPerCategory);
 
-  // 1) Select random images from each category
-  let selectedImages = selectRandomFromEachCategory(images, perCategory);
-
-  // If we still need more images to total 6, fill them from the leftover pool
-  const remaining = totalImagesNeeded - selectedImages.length;
-  if (remaining > 0) {
-    const leftoverPool = shuffleArray(images.filter(img => !selectedImages.includes(img)));
-    selectedImages = selectedImages.concat(leftoverPool.slice(0, remaining));
+  // If we still need more to reach 6
+  const leftoverCount = totalImagesNeeded - selectedImages.length;
+  if (leftoverCount > 0) {
+    const leftoverPool = shuffleArray(
+      images.filter(img => !selectedImages.includes(img))
+    );
+    const extras = leftoverPool.slice(0, leftoverCount);
+    selectedImages = selectedImages.concat(extras);
   }
 
-  // Shuffle the final set of images
+  // Shuffle the final set
   selectedImages = shuffleArray(selectedImages);
 
-  // Split half & half for top/bottom
-  const topImages = selectedImages.slice(0, 3);
+  // Split into two rows
+  const topImages    = selectedImages.slice(0, 3);
   const bottomImages = selectedImages.slice(3, 6);
 
   // Helper: create a card
@@ -83,47 +86,47 @@ document.addEventListener('DOMContentLoaded', () => {
     const card = document.createElement('div');
     card.classList.add('card');
     card.setAttribute('aria-label', `Image Card ${index + 1}`);
+    card.setAttribute('role', 'button');
 
     const cardInner = document.createElement('div');
     cardInner.classList.add('card-inner');
 
-    // Front face
+    // Front face => "Creative.png"
     const cardFront = document.createElement('div');
     cardFront.classList.add('card-front');
-    cardFront.style.backgroundImage = `url('../images/Creative.png')`; // Assuming 'Social.png' is in the same directory
+    cardFront.style.backgroundImage = "url('../images/Creative.png')";
 
-    // Back face
+    // Back face => actual challenge
     const cardBack = document.createElement('div');
     cardBack.classList.add('card-back');
-    cardBack.style.backgroundImage = `url('${imageObj.image}')`; // Now only filename
+    cardBack.style.backgroundImage = `url('${imageObj.image}')`;
 
     cardInner.appendChild(cardFront);
     cardInner.appendChild(cardBack);
     card.appendChild(cardInner);
 
-    // Left-click
-    card.addEventListener('click', function(event) {
-      if (event.button === 0) { // left click
+    // Left-click => flip or select
+    card.addEventListener('click', (evt) => {
+      if (evt.button === 0) {
         if (!card.classList.contains('flipped')) {
-          // flip the card
           card.classList.add('flipped');
         } else {
-          // toggle "selected"
           card.classList.toggle('selected');
         }
       }
     });
 
-    // Right-click => toggle flip
-    card.addEventListener('contextmenu', function(event) {
-      event.preventDefault();
+    // Right-click => flip
+    card.addEventListener('contextmenu', (evt) => {
+      evt.preventDefault();
       card.classList.toggle('flipped');
     });
 
-    // Keyboard accessibility
+    // Keyboard => flip or select
     card.setAttribute('tabindex', '0');
-    card.addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
+    card.addEventListener('keydown', (evt) => {
+      if (evt.key === 'Enter' || evt.key === ' ') {
+        evt.preventDefault();
         if (!card.classList.contains('flipped')) {
           card.classList.add('flipped');
         } else {
@@ -135,49 +138,53 @@ document.addEventListener('DOMContentLoaded', () => {
     return card;
   }
 
-  // Create top row
-  topImages.forEach((imgObj, index) => {
-    const card = createCard(imgObj, index);
-    topCardsContainer.appendChild(card);
+  // 3) Render top/bottom cards
+  topImages.forEach((imgObj, idx) => {
+    topCardsContainer.appendChild(createCard(imgObj, idx));
+  });
+  bottomImages.forEach((imgObj, idx) => {
+    bottomCardsContainer.appendChild(createCard(imgObj, idx + 3));
   });
 
-  // Create bottom row
-  bottomImages.forEach((imgObj, index) => {
-    const card = createCard(imgObj, index + 3);
-    bottomCardsContainer.appendChild(card);
-  });
-
-  // "I Commit" => gather selected images & open new blank page with all data
-  const commitButton = document.querySelector('.accept-button');
-  commitButton.addEventListener('click', () => {
+  // Helper: get all selected filenames
+  function getSelectedFilenames() {
     const selectedCards = document.querySelectorAll('.card.selected');
-    if (selectedCards.length === 0) {
-      alert("Please select at least one challenge card before proceeding.");
-      return;
-    }
-    // Extract the .card-back background image for each selected
-    const selectedImageURLs = Array.from(selectedCards).map(card => {
+    return Array.from(selectedCards).map(card => {
       const backStyle = card.querySelector('.card-back').style.backgroundImage;
-      // e.g. backgroundImage: url("../images/Social_5.png")
       const match = backStyle.match(/url\(["']?(.+?)["']?\)/);
       if (match && match[1]) {
-        const fullImagePath = match[1]; // e.g., "../images/Social_5.png"
-        // Extract only the filename with extension
-        const imageName = fullImagePath.substring(fullImagePath.lastIndexOf('/') + 1).toLowerCase(); // "social_5.png"
-        return imageName;
+        return match[1].substring(match[1].lastIndexOf('/') + 1).toLowerCase();
       }
-      return null; 
+      return null;
     }).filter(Boolean);
+  }
 
-    // Build final data in URL => final.html
-    const finalUrl = "../final.html"
-      + `?firstName=${encodeURIComponent(firstName)}`
-      + `&lastName=${encodeURIComponent(lastName)}`
-      + `&email=${encodeURIComponent(email)}`
-      + `&social=${encodeURIComponent(social)}`
-      + `&images=${encodeURIComponent(selectedImageURLs.join(","))}`;
+  // 4) Explore More => merge selected + existing, back to category page
+  const exploreBtn = document.querySelector('.explore-button');
+  exploreBtn.addEventListener('click', () => {
+    const newlySelected = getSelectedFilenames();
+    const merged = [...existingImages, ...newlySelected];
+    const unique = [...new Set(merged)];
 
-    // Open final page in the same tab (as per original code)
+    const imagesParam = encodeURIComponent(unique.join(','));
+    window.location.href = `../index.html?category=${encodeURIComponent(category)}&images=${imagesParam}`;
+  });
+
+  // 5) I Commit => gather selected + existing, then proceed to sign-up
+  const commitBtn = document.querySelector('.commit-button'); // Updated class selector
+  commitBtn.addEventListener('click', () => {
+    const newlySelected = getSelectedFilenames();
+    if (!newlySelected.length && !existingImages.length) {
+      alert("Please select at least one challenge card.");
+      return;
+    }
+    const merged = [...existingImages, ...newlySelected];
+    const unique = [...new Set(merged)];
+
+    const finalUrl = `../signUp.html`
+      + `?category=${encodeURIComponent(category)}`
+      + `&images=${encodeURIComponent(unique.join(','))}`;
+
     window.location.href = finalUrl;
   });
 });

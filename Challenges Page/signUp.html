@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up</title>
+  <style>
+    /* Basic Reset & Body */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      /* Match your original linear gradient background */
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #333;
+    }
+
+    /* Container */
+    .signup-container {
+      background: #fff;
+      padding: 30px 35px;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 450px;
+      transition: box-shadow 0.3s ease;
+    }
+    .signup-container:hover {
+      box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+    }
+
+    /* Headings & Subtitle */
+    h1 {
+      text-align: center;
+      margin-bottom: 8px;
+      font-size: 1.8rem;
+      color: #2c3e50;
+    }
+    .subtitle {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1rem;
+      color: #555;
+    }
+
+    /* Form Layout */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    form label {
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+    form input[type="text"],
+    form input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+    form input[type="text"]:focus,
+    form input[type="email"]:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+
+    /* T&C and Disclaimer */
+    .checkbox-section {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      color: #444;
+    }
+    .checkbox-section label {
+      display: inline-block;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+    .checkbox-section input[type="checkbox"] {
+      margin-right: 8px;
+      transform: scale(1.2);
+      vertical-align: middle;
+      cursor: pointer;
+    }
+    .terms-text {
+      display: inline;
+    }
+    .terms-text a {
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .terms-text a:hover {
+      text-decoration: underline;
+    }
+    .disclaimer-text {
+      margin-top: 6px;
+      font-size: 0.88rem;
+      color: #555;
+    }
+    .disclaimer-text a {
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: 400;
+    }
+    .disclaimer-text a:hover {
+      text-decoration: underline;
+    }
+
+    /* Submit Button */
+    button[type="submit"] {
+      background: #007BFF;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.3s, transform 0.3s;
+      margin-top: 0.5rem;
+    }
+    button[type="submit"]:hover {
+      background: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .signup-container {
+        padding: 20px;
+      }
+      h1 {
+        font-size: 1.6rem;
+      }
+      .subtitle {
+        font-size: 0.95rem;
+      }
+      form {
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h1>Almost Done!</h1>
+    <p class="subtitle">
+      Please take a moment to sign up so we can submit your challenges.
+    </p>
+    
+    <form id="signUpForm">
+      <!-- First Name -->
+      <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" required />
+      </div>
+
+      <!-- Last Name -->
+      <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" required />
+      </div>
+
+      <!-- Email -->
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required />
+      </div>
+
+      <!-- T&C + Disclaimer -->
+      <div class="checkbox-section">
+        <label>
+          <input type="checkbox" id="terms" required />
+          <span class="terms-text">
+            I have read and agree to the
+            <a href="https://anadiyouth.smvs.org/terms-conditions" target="_blank">
+              Anadi Youth - Terms & Conditions
+            </a>.
+          </span>
+        </label>
+        <p class="disclaimer-text">
+          Please also review our 
+          <a href="https://anadiyouth.smvs.org/disclaimer" target="_blank">
+            Anadi Youth - Disclaimer
+          </a>.
+          Stay safe and follow all rules and regulations.
+        </p>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const category = urlParams.get('category') || "";
+      const images   = urlParams.get('images')   || "";
+
+      const form = document.getElementById('signUpForm');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Check T&C
+        const terms = document.getElementById('terms');
+        if (!terms.checked) {
+          alert("Please agree to the Terms & Conditions before proceeding.");
+          return;
+        }
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName  = document.getElementById('lastName').value.trim();
+        const email     = document.getElementById('email').value.trim();
+
+        // Build final page URL
+        const finalURL = "final.html"
+          + `?firstName=${encodeURIComponent(firstName)}`
+          + `&lastName=${encodeURIComponent(lastName)}`
+          + `&email=${encodeURIComponent(email)}`
+          + `&social=${encodeURIComponent(category)}`
+          + `&images=${encodeURIComponent(images)}`;
+
+        // Navigate to final.html
+        window.location.href = finalURL;
+      });
+    });
+  </script>
+</body>
+</html>
