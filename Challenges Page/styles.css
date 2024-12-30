@@ -126,13 +126,13 @@ header p span#changing-subtitle {
     transition: transform 0.3s, box-shadow 0.3s;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     background: #fff;
-    transform: translateY(50px); /* Starts slightly off-screen */
-    opacity: 0; /* Initially hidden */
-    animation: slideIn 0.6s ease-out forwards; /* Adds the slide-in effect */
+    /* transform: translateY(50px); 
+    opacity: 0; 
+    animation: slideIn 0.6s ease-out forwards; 
 }
 
-.category-button:nth-child(1) { animation-delay: 0.3s; } /* Delay for 1st button */
-.category-button:nth-child(2) { animation-delay: 0.4s; } /* Delay for 2nd button */
+.category-button:nth-child(1) { animation-delay: 0.3s; } 
+.category-button:nth-child(2) { animation-delay: 0.4s; } 
 .category-button:nth-child(3) { animation-delay: 0.5s; }
 .category-button:nth-child(4) { animation-delay: 0.6s; }
 .category-button:nth-child(5) { animation-delay: 0.7s; }
@@ -140,13 +140,13 @@ header p span#changing-subtitle {
 
 @keyframes slideIn {
     from {
-        opacity: 0; /* Start fully invisible */
-        transform: translateY(50px); /* Start slightly below position */
+        opacity: 0; 
+        transform: translateY(50px); 
     }
     to {
-        opacity: 1; /* Fully visible */
-        transform: translateY(0); /* End at original position */
-    }
+        opacity: 1; 
+        transform: translateY(0);
+    } */
 }
 
 .category-button img {

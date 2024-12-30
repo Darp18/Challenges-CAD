@@ -67,7 +67,7 @@
       border: 1px solid #ccc;
       font-size: 1rem;
       transition: border-color 0.3s;
-      text-transform: capitalize; /* Optional: Visually capitalize input */
+      /* No visual transformation */
     }
     form input[type="text"]:focus,
     form input[type="email"]:focus {
@@ -211,10 +211,15 @@
       const category = urlParams.get('category') || "";
       const images   = urlParams.get('images')   || "";
 
-      // Function to capitalize the first letter of a string
-      function capitalizeFirstLetter(string) {
+      // Function to capitalize the first letter of each word in a string
+      function capitalizeWords(string) {
         if (string.length === 0) return "";
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        return string.split(' ').map(word => {
+          // Handle hyphenated names like "Anne-Marie"
+          return word.split('-').map(subWord => {
+            return subWord.charAt(0).toUpperCase() + subWord.slice(1).toLowerCase();
+          }).join('-');
+        }).join(' ');
       }
 
       const form = document.getElementById('signUpForm');
@@ -230,15 +235,16 @@
 
         let firstName = document.getElementById('firstName').value.trim();
         let lastName  = document.getElementById('lastName').value.trim();
-        const email     = document.getElementById('email').value.trim();
+        const email   = document.getElementById('email').value.trim();
 
-        // Capitalize first letters
-        firstName = capitalizeFirstLetter(firstName);
-        lastName  = capitalizeFirstLetter(lastName);
+        // Capitalize first letters of each word
+        firstName = capitalizeWords(firstName);
+        lastName  = capitalizeWords(lastName);
 
         // Optionally, update the input fields with capitalized names
-        document.getElementById('firstName').value = firstName;
-        document.getElementById('lastName').value = lastName;
+        // Uncomment the lines below if you want to reflect the changes in the UI
+        // document.getElementById('firstName').value = firstName;
+        // document.getElementById('lastName').value = lastName;
 
         // Build final page URL
         const finalURL = "final.html"
